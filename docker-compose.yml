@@ -1,10 +1,7 @@
 services:
   db:
     image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+    
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: on-failure
@@ -13,16 +10,7 @@ services:
     build: ./backend
     env_file:
       - .env
-    environment:
-      # SET THIS to your WSGI module (see step 4.2)
-      GUNICORN_APP_MODULE: ${GUNICORN_APP_MODULE}
-      PORT: ${PORT}
-      # If you need DB host/port as separate envs, you can add them here
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: ${POSTGRES_DB}
-      DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
+    
     depends_on:
       - db
     restart: on-failure
