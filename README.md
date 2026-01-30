@@ -112,9 +112,10 @@ docker compose logs backend > backend-logs.txt
 - Database data is persisted via Docker volumes
 
 Starter repository for the Conduit Container project.
-Detailed documentation can be found in the feature branch.
+This repository focuses on containerization and orchestration.
+Application source code is included for completeness and demonstration purposes.
 
-## Source Code Reference (Archived Upstream)
+## Source Code Reference 
 
 The original RealWorld Conduit repositories are archived and read-only, therefore forking and creating pull requests is not possible.
 
