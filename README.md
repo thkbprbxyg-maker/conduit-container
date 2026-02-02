@@ -45,3 +45,44 @@ docker compose logs -f backend
 docker compose logs -f frontend
 docker compose logs -f db
 ```
+
+## Table of Contents
+- Overview
+- Architecture
+- Requirements
+- Quickstart
+- Usage
+- Configuration
+- Testing Checklist
+- Logs
+- Security Notes
+
+
+## Testing Checklist
+
+Before submitting this project, the following points were verified:
+
+- [x] Frontend is reachable via browser on port 8282
+- [x] Backend runs as WSGI application using Gunicorn (no dev server)
+- [x] All services restart automatically on failure
+- [x] Application is fully navigable and loads data correctly
+- [x] Logs can be viewed via CLI
+- [x] Logs can be persisted into files if required
+
+
+## Logs
+
+View logs via CLI:
+```bash
+docker compose logs backend
+docker compose logs frontend
+docker compose logs db
+```
+
+Persist logs to file:
+docker compose logs backend > backend-logs.txt
+
+## Code Conventions
+
+- Environment variables follow `UPPER_CASE_WITH_UNDERSCORE`
+- Variables are always referenced using `${VAR_NAME}` syntax
