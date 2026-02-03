@@ -7,7 +7,34 @@ This repository contains:
 - **frontend/** Angular app served via nginx
 - **PostgreSQL** via Docker Compose
 
----
+
+## Project Structure & Review Notes
+
+This repository intentionally uses a minimal `main` branch and a fully implemented `future` branch.
+
+### Background
+The initial setup used Git submodules for backend and frontend.  
+This approach made the project harder to review and understand.
+
+### Current Approach
+- All backend and frontend source code is included directly in this repository
+- Git submodules were completely removed
+- The project is now fully self-contained and reviewable
+
+### Branch Strategy
+- `main` contains only a minimal README and serves as a clean baseline
+- `future` contains:
+  - Full backend source code
+  - Full frontend source code
+  - Dockerfiles
+  - docker-compose configuration
+  - `.env.example` (no sensitive data)
+
+### Environment Variables
+- `.env` is ignored and **not committed**
+- `.env.example` is provided as a template
+- Configuration is handled exclusively via environment variables
+
 
 ## Requirements
 - Docker
@@ -15,7 +42,7 @@ This repository contains:
 
 No local installation of Python/Node/Postgres required.
 
----
+
 
 ## Quickstart
 
