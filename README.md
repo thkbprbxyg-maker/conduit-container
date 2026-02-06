@@ -40,8 +40,8 @@ docker compose up --build
 
 
 3. After startup: open the aplication:
-- Frontend: http://<your_ip>:8282
-- Backend API: http://<your_ip>:8000/api
+- Frontend: 'http://<your_ip>:8282'
+- Backend API: 'http://<your_ip>:8000/api'
 
 Stop: the application:
 
@@ -52,7 +52,8 @@ docker compose down
 ## Usage
 
 Configuration is done via environment variables in .env.
-Important: .env is not committed. Only .env.example is tracked.
+> [!IMPORTANT] 
+> Crucical information necessary for users to succeed.
 
 
 
