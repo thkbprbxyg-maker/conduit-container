@@ -4,9 +4,6 @@ services:
     image: postgres:16-alpine
     restart: unless-stopped
     env_file: "webapp.env"
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -14,11 +11,6 @@ services:
     build: ./conduit-backend
     restart: unless-stopped
     env_file: "webapp.env"
-      SECRET_KEY: ${SECRET_KEY}
-      DB_HOST: db
-      DB_NAME: ${POSTGRES_DB}
-      DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
     depends_on:
       - db
     ports:
