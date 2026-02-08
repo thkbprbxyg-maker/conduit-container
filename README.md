@@ -53,7 +53,9 @@ docker compose down
 
 Configuration is done via environment variables in .env.
 > [!IMPORTANT] 
-> Crucical information necessary for users to succeed.
+> Create a .env file from .env.example before running Docker Comose. The stack andopen the app:
+> - Backend: http://<your_IP>
+> - Frontned: http://<your_IP> 
 
 
 
