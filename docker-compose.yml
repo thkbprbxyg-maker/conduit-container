@@ -1,7 +1,10 @@
 services:
   db:
     image: postgres:16-alpine
-    
+    environment:
+      POSTGRES-SER: conduit
+      POSTGRES_PASSWORD: conduit
+      POSTGRES_DB: conduit
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: on-failure
@@ -10,21 +13,22 @@ services:
     build: ./backend
     env_file:
       - .env
-    
     depends_on:
       - db
-    restart: on-failure
-    
     ports:
       - "8000:8000"
+    restart: on-failure
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL}
     depends_on:
       - backend
-    restart: on-failure
     ports:
       - "8282:80"
+    restart: on-failure
 
 volumes:
   pgdata:
