@@ -1,6 +1,6 @@
-# Conduit Container
+# Conduit Container (Starter)
 
-Containerized version of the RealWorld "Conduit" application using Docker and Docker Compose.
+This is the starter branch for review purposes.
 
 This repository contains:
 - **backend/** Django API (Gunicorn)
