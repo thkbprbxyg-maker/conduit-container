@@ -18,7 +18,11 @@ services:
       - "8000:8000"
 
   frontend:
-    build: ./conduit-frontend
+    build: 
+    context: ./conduit-frontend
+    args: 
+      API_URL: ${API_URL}
+    env_file: ".env"
     restart: unless-stopped
     depends_on:
       - backend
