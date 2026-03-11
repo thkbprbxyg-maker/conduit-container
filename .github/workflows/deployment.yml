@@ -20,9 +20,9 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/ibrahim-onat/conduit-container
-            git fetch origin
-            git checkout feature-deployment
-            git pull origin feature-deployment
-            docker compose down
-            docker compose up -d --build
+           cd /home/ibrahim-onat/conduit-container
+           git fetch origin
+           git checkout -B feature-deployment origin/feature-deployment
+           git pull origin feature-deployment
+           docker compose down
+           docker compose up -d --build
