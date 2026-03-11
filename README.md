@@ -15,7 +15,7 @@ This repository contains:
 - [Configuration](#Configuration)
 - [Logs](#Logs)
 - [Code Conventions](#Code Conventions) 
-
+- [Deployment](#Deployment)
 
 ## Requirements
 - Docker
@@ -78,3 +78,25 @@ docker compose logs backend > backend-logs.txt
 
 - Environment variables follow `UPPER_CASE_WITH_UNDERSCORE`
 - Variables are always referenced using `${VAR_NAME}` syntax
+
+
+## Deployment
+
+This project uses GitHub Actions to automatically deploy the application to a remote VM via SSH.
+
+### Deployment workflow
+- The workflow is triggered on push to the `feature-deployment` branch.
+- GitHub Actions connects to the remote server using SSH.
+- The server pulls the latest version of the repository.
+- Docker Compose stops old containers and rebuilds the application.
+- The application is then started again in detached mode.
+
+### Server setup
+The deployment target is a remote Linux VM with Docker and Docker Compose installed.
+
+### Exposed services
+- Frontend: Port 8282
+- Backend: Port 8000
+
+### Notes
+Sensitive data such as SSH credentials are stored in GitHub repository secrets and are not hardcoded in the repository.
