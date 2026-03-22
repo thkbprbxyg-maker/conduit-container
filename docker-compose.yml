@@ -14,12 +14,11 @@ services:
       - "8000:8000"
 
   frontend:
-    build: ./conduit-frontend
-    restart: unless-stopped
-    depends_on:
-      - backend
-    ports:
-      - "8282:80"
-
-volumes:
-  pgdata:
+  build:
+    context: ./conduit-frontend
+    dockerfile: Dockerfile
+  restart: unless-stopped
+  depends_on:
+    - backend
+  ports:
+    - "8282:80"
