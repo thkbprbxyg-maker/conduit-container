@@ -1,24 +1,29 @@
+version: '3.9'
 services:
   db:
     image: postgres:16-alpine
-    restart: unless-stopped
+    environment:
+      POSTGRES_DB: conduit
+      POSTGRES_USER: conduit
+      POSTGRES_PASSWORD: conduit
     volumes:
       - pgdata:/var/lib/postgresql/data
 
   backend:
-    build: ./conduit-backend
-    restart: unless-stopped
+    image: ghcr.io/thkbprbxyg-maker/conduit-backend:latest
     depends_on:
       - db
     ports:
       - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://conduit:conduit@db:5432/conduit
 
   frontend:
-  build:
-    context: ./conduit-frontend
-    dockerfile: Dockerfile
-  restart: unless-stopped
-  depends_on:
-    - backend
-  ports:
-    - "8282:80"
+    image: ghcr.io/thkbprbxyg-maker/conduit-frontend:latest
+    depends_on:
+      - backend
+    ports:
+      - "8282:80"
+
+volumes:
+  pgdata:
