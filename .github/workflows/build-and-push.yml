@@ -35,11 +35,11 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v4
         with:
-          # Use repository root as context and point to the Dockerfile with a
-          # repo-relative path. This avoids ambiguity in the runner about where
-          # the Dockerfile lives.
-          context: .
-          file: ./backend/Dockerfile
+          # Use the backend directory as the build context and reference the
+          # Dockerfile inside that directory. This is the most straightforward
+          # layout and avoids path-resolution issues in Buildx.
+          context: ./backend
+          file: Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/conduit-backend:latest
@@ -49,10 +49,10 @@ jobs:
       - name: Build and push frontend image
         uses: docker/build-push-action@v4
         with:
-          # Use repository root as context and point to the Dockerfile with a
-          # repo-relative path.
-          context: .
-          file: ./frontend/Dockerfile
+          # Use the frontend directory as the build context and reference the
+          # Dockerfile inside that directory.
+          context: ./frontend
+          file: Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/conduit-frontend:latest
