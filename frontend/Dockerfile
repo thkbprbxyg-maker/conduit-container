@@ -1,19 +1,21 @@
-# ---- Build stage ----
-FROM node:20-alpine AS build
+# Build Stage
+FROM node:20-alpine as build
+
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm ci
 
 COPY . .
-
-ARG API_URL=http://localhost:8000/api
-RUN sed -i "s|API_URL|${API_URL}|g" src/environments/environment.prod.ts
-
 RUN npm run build
 
-# ---- Runtime stage ----
+# Runtime Stage
 FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
+
+# Copy built app files into nginx html directory. The Angular build outputs into
+# dist/angular-conduit (see angular.json). Copy the contents of that folder so
+# the app's index.html replaces the default nginx welcome page.
+COPY --from=build /app/dist/angular-conduit/ /usr/share/nginx/html/
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
