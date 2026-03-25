@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: conduit-container-backend:local
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://conduit:conduit@db:5432/conduit
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: conduit-container-frontend:local
+    ports:
+      - "8282:80"
+    depends_on:
+      - backend
