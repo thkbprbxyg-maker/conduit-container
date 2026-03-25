@@ -16,7 +16,7 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgres://conduit:conduit@db:5432/conduit
-
+      ALLOWED_HOSTS: "*"
   frontend:
     image: ghcr.io/thkbprbxyg-maker/conduit-frontend:latest
     depends_on:
