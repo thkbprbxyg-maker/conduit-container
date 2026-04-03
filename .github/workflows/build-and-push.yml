@@ -13,47 +13,28 @@ permissions:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          submodules: false
-          persist-credentials: true
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Debug: list workspace and show Dockerfiles
-        run: |
-          echo 'Repository root:'
-          ls -la
-          echo '--- backend dir ---'
-          ls -la backend || true
-          echo '--- frontend dir ---'
-          ls -la frontend || true
-          echo '--- backend Dockerfile ---'
-          sed -n '1,120p' backend/Dockerfile || true
-          echo '--- frontend Dockerfile ---'
-          sed -n '1,120p' frontend/Dockerfile || true
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to GHCR
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push backend image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
-          # Use repository root as context and give a repo-relative Dockerfile
-          # path. This is reliable across runners: Buildx will receive the
-          # repository context and can locate the Dockerfile explicitly.
-          context: .
+          context: ./backend
           file: ./backend/Dockerfile
           push: true
           tags: |
@@ -62,17 +43,12 @@ jobs:
           platforms: linux/amd64,linux/arm64
 
       - name: Build and push frontend image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./frontend
           file: ./frontend/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/conduit-frontend:latest
             ghcr.io/${{ github.repository_owner }}/conduit-frontend:${{ github.sha }}
           platforms: linux/amd64,linux/arm64
-
-      - name: Output image names
-        run: |
-          echo "backend=ghcr.io/${{ github.repository_owner }}/conduit-backend:latest"
-          echo "frontend=ghcr.io/${{ github.repository_owner }}/conduit-frontend:latest"
