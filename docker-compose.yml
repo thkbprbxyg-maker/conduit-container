@@ -1,6 +1,7 @@
 services:
   db:
     image: postgres:16-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_DB: conduit
       POSTGRES_USER: conduit
@@ -10,6 +11,7 @@ services:
 
   backend:
     image: ghcr.io/thkbprbxyg-maker/conduit-backend:latest
+    restart: unless-stopped
     depends_on:
       - db
     ports:
@@ -17,8 +19,10 @@ services:
     environment:
       DATABASE_URL: postgres://conduit:conduit@db:5432/conduit
       ALLOWED_HOSTS: "*"
+
   frontend:
     image: ghcr.io/thkbprbxyg-maker/conduit-frontend:latest
+    restart: unless-stopped
     depends_on:
       - backend
     ports:
