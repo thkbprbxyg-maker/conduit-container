@@ -2,23 +2,18 @@ services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
-    environment:
-      POSTGRES_DB: conduit
-      POSTGRES_USER: conduit
-      POSTGRES_PASSWORD: conduit
+    env_file: .env
     volumes:
       - pgdata:/var/lib/postgresql/data
 
   backend:
     image: ghcr.io/thkbprbxyg-maker/conduit-backend:latest
     restart: unless-stopped
+    env_file: .env
     depends_on:
       - db
     ports:
       - "8000:8000"
-    environment:
-      DATABASE_URL: postgres://conduit:conduit@db:5432/conduit
-      ALLOWED_HOSTS: "*"
 
   frontend:
     image: ghcr.io/thkbprbxyg-maker/conduit-frontend:latest
