@@ -30,7 +30,7 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          tags: 
+          tags: |
            ghcr.io/${{ github.repository_owner }}/conduit-backend:latest
            ghcr.io/${{ github.repository_owner }}/conduit-backend:${{ github.sha }}
 
@@ -40,9 +40,9 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
-          tags: 
-           ghcr.io/${{ github.repository_owner }}/conduit-frontend:latest
-           ghcr.io/${{ github.repository_owner }}/conduit-frontend:${{ github.sha }}
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/conduit-frontend:latest
+            ghcr.io/${{ github.repository_owner }}/conduit-frontend:${{ github.sha }}
 
       - name: Create .env file
         run: |
